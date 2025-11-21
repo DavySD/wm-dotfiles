@@ -1,0 +1,59 @@
+# ~/.config/alacritty/alacritty.toml
+
+[general]
+# Inicia direto no Zellij
+import = []
+live_config_reload = true
+
+[terminal]
+shell = { program = "zellij" }
+
+[window]
+opacity = 0.82
+padding = { x = 10, y = 10 }
+dynamic_padding = true
+decorations = "full"
+
+[font]
+size = 13.0
+
+[font.normal]
+family = "VictorMono Nerd Font"
+style = "SemiBold"
+
+[font.bold]
+family = "VictorMono Nerd Font"
+style = "Bold"
+
+[font.italic]
+family = "VictorMono Nerd Font"
+style = "SemiBold Italic"
+
+# Esquema de Cores Kanagawa Wave
+[colors.primary]
+background = "#1f1f28"
+foreground = "#dcd7ba"
+
+[colors.normal]
+black   = "#090618"
+red     = "#c34043"
+green   = "#76946a"
+yellow  = "#c0a36e"
+blue    = "#7e9cd8"
+magenta = "#957fb8"
+cyan    = "#6a9589"
+white   = "#c8c093"
+
+[colors.bright]
+black   = "#727169"
+red     = "#e82424"
+green   = "#98bb6c"
+yellow  = "#e6c384"
+blue    = "#7fb4ca"
+magenta = "#938aa9"
+cyan    = "#7aa89f"
+white   = "#dcd7ba"
+
+[colors.selection]
+text = "#c8c093"
+background = "#2d4f67"
