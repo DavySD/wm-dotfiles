@@ -15,7 +15,11 @@
 
 <details>
   <summary><strong>🌊 Kanagawa Wave</strong></summary>
-
+ 
+  <br>  
+  <img src="Source/Screenshot/preview-0.png" alt="Kanagawa Preview" width="100%" style="border-radius: 10px">
+   <br><br>
+  
   - [**Alacritty**](https://github.com/HavanaHL/wm-dotfiles/tree/main/Kanagawa/alacritty)
   - [**Dunst**](https://github.com/HavanaHL/wm-dotfiles/tree/main/Kanagawa/dunst)
   - [**Fuzzel**](https://github.com/HavanaHL/wm-dotfiles/tree/main/Kanagawa/fuzzel) 
