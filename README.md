@@ -18,6 +18,7 @@
  
   <br>  
   <img src="Source/Screenshot/preview-0.png" alt="Kanagawa Preview" width="100%" style="border-radius: 10px">
+  <img src="Source/Screenshot/preview-0.gif" width="100%">
    <br><br>
   
   - [**Alacritty**](https://github.com/HavanaHL/wm-dotfiles/tree/main/Kanagawa/alacritty)
