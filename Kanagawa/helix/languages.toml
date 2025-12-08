@@ -1,0 +1,13 @@
+[[language]]
+name = "rust"
+auto-format = true
+language-servers = ["rust-analyzer"]
+
+[language-server.rust-analyzer]
+command = "rust-analyzer"
+timeout = 2000
+
+[language-server.rust-analyzer.config]
+checkOnSave.enable = false
+diagnostics.enable = true
+cargo.autoreload = true

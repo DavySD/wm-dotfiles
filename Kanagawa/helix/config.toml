@@ -1,1 +1,5 @@
 theme = "kanabox_viado"
+
+[editor.lsp]
+enable=true
+display-messages = true
