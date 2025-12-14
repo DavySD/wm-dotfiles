@@ -1,0 +1,60 @@
+# ~/.config/alacritty/alacritty.toml
+
+[general]
+# Inicia direto no Zellij
+import = []
+live_config_reload = true
+
+[terminal]
+shell = { program = "zellij" }
+
+[window]
+opacity = 1
+padding = { x = 10, y = 10 }
+dynamic_padding = true
+decorations = "full"
+
+[font]
+size = 13.0
+
+[font.normal]
+family = "VictorMono Nerd Font"
+style = "SemiBold"
+
+[font.bold]
+family = "VictorMono Nerd Font"
+style = "Bold"
+
+[font.italic]
+family = "VictorMono Nerd Font"
+style = "SemiBold Italic"
+
+# Esquema de Cores Kanagawa Wave
+[colors.primary]
+background = "#1a1a1a"
+foreground = "#dcd7ba"
+
+
+[colors.normal]
+black   = "#0f0f0f"   # carvão
+red     = "#7a3b2e"   # ferrugem apagada
+green   = "#5f6b4f"   # oliva sujo
+yellow  = "#8a7a5a"   # poeira velha
+blue    = "#5a6472"   # aço frio
+magenta = "#6b5a6e"   # roxo morto
+cyan    = "#5f7470"   # verde industrial
+white   = "#a89080"   # bege envelhecido (puxa do SchemeSel)
+
+[colors.bright]
+black   = "#2a2a2a"
+red     = "#b5541a"   # ferrugem viva (seu accent!)
+green   = "#7a8a6a"
+yellow  = "#a08c6a"
+blue    = "#7a8596"
+magenta = "#8a748e"
+cyan    = "#7a948f"
+white   = "#c0a890"
+
+[colors.selection]
+text = "#c0a890"
+background = "#1a1a1a"

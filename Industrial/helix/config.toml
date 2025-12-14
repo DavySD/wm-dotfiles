@@ -1,0 +1,5 @@
+theme = "base16_terminal"
+
+[editor.lsp]
+enable=true
+display-messages = true
