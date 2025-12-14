@@ -43,7 +43,7 @@
   
   - [**Alacritty**](https://github.com/HavanaHL/wm-dotfiles/tree/main/Industrial/alacritty)
   - [**Dunst**](https://github.com/HavanaHL/wm-dotfiles/tree/main/Industrial/dunst)
-  - [**DWM**](https://github.com/HavanaHL/wm-dotfiles/tree/main/Industrial/dwm)
+  - [**DWM**](https://github.com/HavanaHL/wm-dotfiles/tree/main/Industrial/DWM)
   - [**Fuzzel**](https://github.com/HavanaHL/wm-dotfiles/tree/main/Industrial/fuzzel) 
   - [**Helix**](https://github.com/HavanaHL/wm-dotfiles/tree/main/Industrial/helix)
   - [**Waybar**](https://github.com/HavanaHL/wm-dotfiles/tree/main/Industrial/waybar)
