@@ -51,7 +51,8 @@
 #define CLEANMASK(mask)         (mask & ~(numlockmask|LockMask) & (ShiftMask|ControlMask|Mod1Mask|Mod2Mask|Mod3Mask|Mod4Mask|Mod5Mask))
 #define INTERSECT(x,y,w,h,m)    (MAX(0, MIN((x)+(w),(m)->wx+(m)->ww) - MAX((x),(m)->wx)) \
                                * MAX(0, MIN((y)+(h),(m)->wy+(m)->wh) - MAX((y),(m)->wy)))
-#define ISVISIBLE(C)            ((C->tags & C->mon->tagset[C->mon->seltags]))
+#define ISVISIBLEONTAG(C, T)    ((C->tags & T))
+#define ISVISIBLE(C)            ISVISIBLEONTAG(C, C->mon->tagset[C->mon->seltags])
 #define MOUSEMASK               (BUTTONMASK|PointerMotionMask)
 #define WIDTH(X)                ((X)->w + 2 * (X)->bw)
 #define HEIGHT(X)               ((X)->h + 2 * (X)->bw)
@@ -172,6 +173,7 @@ static int applysizehints(Client *c, int *x, int *y, int *w, int *h, int interac
 static void arrange(Monitor *m);
 static void arrangemon(Monitor *m);
 static void attach(Client *c);
+static void attachaside(Client *c);
 static void attachstack(Client *c);
 static void buttonpress(XEvent *e);
 static void checkotherwm(void);
@@ -210,6 +212,7 @@ static void maprequest(XEvent *e);
 static void monocle(Monitor *m);
 static void motionnotify(XEvent *e);
 static void movemouse(const Arg *arg);
+static Client *nexttagged(Client *c);
 static Client *nexttiled(Client *c);
 static void pop(Client *c);
 static void propertynotify(XEvent *e);
@@ -457,6 +460,17 @@ attach(Client *c)
 {
 	c->next = c->mon->clients;
 	c->mon->clients = c;
+}
+
+void
+attachaside(Client *c) {
+	Client *at = nexttagged(c);
+	if(!at) {
+		attach(c);
+		return;
+	}
+	c->next = at->next;
+	at->next = c;
 }
 
 void
@@ -1212,7 +1226,7 @@ manage(Window w, XWindowAttributes *wa)
 		c->isfloating = c->oldstate = trans != None || c->isfixed;
 	if (c->isfloating)
 		XRaiseWindow(dpy, c->win);
-	attach(c);
+	attachaside(c);
 	attachstack(c);
 	XChangeProperty(dpy, root, netatom[NetClientList], XA_WINDOW, 32, PropModeAppend,
 		(unsigned char *) &(c->win), 1);
@@ -1348,6 +1362,16 @@ movemouse(const Arg *arg)
 }
 
 Client *
+nexttagged(Client *c) {
+	Client *walked = c->mon->clients;
+	for(;
+		walked && (walked->isfloating || !ISVISIBLEONTAG(walked, c->tags));
+		walked = walked->next
+	);
+	return walked;
+}
+
+Client *
 nexttiled(Client *c)
 {
 	for (; c && (c->isfloating || !ISVISIBLE(c)); c = c->next);
@@ -1464,12 +1488,12 @@ void
 resizeclient(Client *c, int x, int y, int w, int h)
 {
 	XWindowChanges wc;
-
 	c->oldx = c->x; c->x = wc.x = x;
 	c->oldy = c->y; c->y = wc.y = y;
 	c->oldw = c->w; c->w = wc.width = w;
 	c->oldh = c->h; c->h = wc.height = h;
 	wc.border_width = c->bw;
+
 	XConfigureWindow(dpy, c->win, CWX|CWY|CWWidth|CWHeight|CWBorderWidth, &wc);
 	configure(c);
 	XSync(dpy, False);
@@ -1695,7 +1719,7 @@ sendmon(Client *c, Monitor *m)
 	detachstack(c);
 	c->mon = m;
 	c->tags = m->tagset[m->seltags]; /* assign tags of target monitor */
-	attach(c);
+	attachaside(c);
 	attachstack(c);
 	focus(NULL);
 	arrange(NULL);
@@ -1996,7 +2020,7 @@ tagmon(const Arg *arg)
 void
 tile(Monitor *m)
 {
-  unsigned int i, n, h, r, g = 0, mw, my, ty;
+  unsigned int i, n, h, mw, my, ty;
 	Client *c;
 
 	for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
@@ -2004,22 +2028,20 @@ tile(Monitor *m)
 		return;
 
 	if (n > m->nmaster)
-	mw = m->nmaster ? (m->ww - (g = gappx)) * m->mfact : 0;
+	mw = m->nmaster ? m->ww * m->mfact : 0;
 	else
 		mw = m->ww;
 	for (i = my = ty = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++)
 		if (i < m->nmaster) {
-			r = MIN(n, m->nmaster) - i;
-			h = (m->wh - my - gappx * (r - 1)) / r;
+	    h = (m->wh - my) / (MIN(n, m->nmaster) - i);
 			resize(c, m->wx, m->wy + my, mw - (2*c->bw), h - (2*c->bw), 0);
 			if (my + HEIGHT(c) < m->wh)
-		  my += HEIGHT(c) + gappx;
+		  my += HEIGHT(c);
 		} else {
-		  r = n - i;
-			h = (m->wh - ty - gappx * (r - 1)) / r;
-			resize(c, m->wx + mw + g, m->wy + ty, m->ww - mw - g - (2*c->bw), h - (2*c->bw), False);
-			if (ty + HEIGHT(c) < m->wh)
-			ty += HEIGHT(c) + gappx;
+		h = (m->wh - ty) / (n - i);
+		resize(c, m->wx + mw, m->wy + ty, m->ww - mw - (2*c->bw), h - (2*c->bw), False);
+		if (ty + HEIGHT(c) < m->wh)
+			ty += HEIGHT(c);
 		}
 }
 
@@ -2275,7 +2297,7 @@ updategeom(void)
 				m->clients = c->next;
 				detachstack(c);
 				c->mon = mons;
-				attach(c);
+				attachaside(c);
 				attachstack(c);
 			}
 			if (m == selmon)

@@ -3,12 +3,11 @@
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
-static const unsigned int gappx     = 6;        /* gap pixel between windows */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft = 0;    /* 0: systray in the right corner, >0: systray on left of status text */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
-static const int showsystray        = 0;        /* 0 means no systray */
+static const int showsystray        = 1;        /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "VictorMono Nerd Font:size=10" };
@@ -50,11 +49,13 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
+	{ "Gimp",     NULL,       NULL,       0,            0,           -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
-	{ NULL,		  "spterm",		NULL,		SPTAG(0),		1,			 -1 },
-	{ NULL,		  "spfm",		NULL,		SPTAG(1),		1,			 -1 },
-	{ NULL,		  "keepassxc",	NULL,		SPTAG(2),		0,			 -1 },
+	{ "Discord",  NULL,       NULL,       0,            1,           -1 },
+	{ "Thunar",     NULL,       NULL,       0,            1,           -1 },
+	{ NULL,		    "spterm",		NULL,		    SPTAG(0),		  1,			     -1 },
+	{ NULL,		    "spfm",	 	  NULL,		    SPTAG(1),		  1,			     -1 },
+	{ NULL,		    "keepassxc",NULL,		    SPTAG(2),		  0,			     -1 },
 
 };
 
@@ -69,8 +70,8 @@ static const int refreshrate = 120;  /* refresh rate (per second) for client mov
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "[@]",      spiral },
-	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[]=",      tile },    /* first entry is default */
+	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
  	{ "[\\]",     dwindle },
 };
@@ -102,10 +103,11 @@ static const char *dmenucmd[] = { "rofi", "-show", "drun", "-config", "~/.config
 static const char *filemgr[]  = { "thunar", NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *ll[]       = { "st", NULL };
-static const char *prts[]     = { "scrot", "-s", "-F", "~/Imagens/CT/%S.png", NULL };
 static const char *upvol[]    = { "wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "5%+", NULL };
 static const char *downvol[]  = { "wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "5%-", NULL };
 static const char *mutevol[]  = { "wpctl", "set-mute", "@DEFAULT_AUDIO_SINK@", "toggle", NULL };
+static const char *screenshot_full[] = { "sh", "-c", "maim | tee ~/Imagens/CT/X11/$(date +'%Y-%m-%d-%H%M%S').png | xclip -selection clipboard -t image/png", NULL };
+static const char *screenshot_sel[] = { "sh", "-c", "maim -s -u | tee ~/Imagens/CT/X11/$(date +'%Y-%m-%d-%H%M%S').png | xclip -selection clipboard -t image/png", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -113,7 +115,9 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MOD4KEY,                      XK_Return, spawn,          {.v = ll } },
 	{ MODKEY,                       XK_e,      spawn,          {.v = filemgr } },
-	{ MODKEY,                       XK_Print,  spawn,          {.v = prts } },
+	{ MODKEY|ShiftMask,             XK_a,      spawn,          {.v = autostart } },
+  { 0,                            XK_Print,  spawn,          {.v = screenshot_full } },
+  { ShiftMask,                    XK_Print,  spawn,          {.v = screenshot_sel } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
