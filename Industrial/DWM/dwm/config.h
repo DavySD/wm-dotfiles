@@ -11,17 +11,8 @@ static const int showsystray        = 1;        /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "VictorMono Nerd Font:size=10" };
-static const char dmenufont[]       = "monospace:size=10";
-static const char col_gray1[]       = "#222222";
-static const char col_gray2[]       = "#444444";
-static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#005577";
 static const char *colors[][3]      = {
-	/*               fg         bg         border   */
-	// [SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	// [SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
-       /* fg         bg         border   */
+                     /* fg         bg         border   */
     [SchemeNorm] = { "#5c5048", "#0f0f0f", "#2a2a2a" }, // Estado Normal/Inativo
     [SchemeSel]  = { "#a89080", "#1a1a1a", "#b5541a"  }, // Estado Selecionado/Ativo
 };
@@ -30,14 +21,14 @@ typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
-const char *spcmd1[] = {"st", "-n", "spterm", "-g", "120x34", NULL };
-const char *spcmd2[] = {"st", "-n", "spfm", "-g", "144x41", "-e", "ranger", NULL };
-const char *spcmd3[] = {"keepassxc", NULL };
+const char *spcmd1[] = {"st", "-n", "spterm", "-g", "120x30", NULL };
+const char *spcmd2[] = {"st", "-n", "spfm", "-g", "120x30", "-e", "ranger", NULL };
+const char *spcmd3[] = {"bitwarden-desktop-bin", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spterm",      spcmd1},
 	{"spranger",    spcmd2},
-	{"keepassxc",   spcmd3},
+	{"bitwarden-desktop-bin",   spcmd3},
 };
 
 /* tagging */
@@ -52,10 +43,12 @@ static const Rule rules[] = {
 	{ "Gimp",     NULL,       NULL,       0,            0,           -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
 	{ "Discord",  NULL,       NULL,       0,            1,           -1 },
+	{ "Steam",  NULL,       NULL,       0,            1,           -1 },
+	{ "steam",  NULL,       NULL,       0,            1,           -1 },
 	{ "Thunar",     NULL,       NULL,       0,            1,           -1 },
 	{ NULL,		    "spterm",		NULL,		    SPTAG(0),		  1,			     -1 },
 	{ NULL,		    "spfm",	 	  NULL,		    SPTAG(1),		  1,			     -1 },
-	{ NULL,		    "keepassxc",NULL,		    SPTAG(2),		  0,			     -1 },
+	{ NULL,		    "bitwarden-desktop-bin",NULL,		    SPTAG(2),		  0,			     -1 },
 
 };
 
@@ -75,15 +68,7 @@ static const Layout layouts[] = {
 	{ "[M]",      monocle },
  	{ "[\\]",     dwindle },
 };
-
-/* autostart */
-static const char *const autostart[] = {
-	"gentoo-pipewire-launcher", "restart", NULL,
-	"setxkbmap", "br", "abnt2", NULL,
-	"picom", "-b", NULL,
-	"nitrogen", "--restore", NULL,
-	NULL,
-};
+;
 
 /* key definitions */
 #define MODKEY Mod1Mask
@@ -99,7 +84,7 @@ static const char *const autostart[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "rofi", "-show", "drun", "-config", "~/.config/rofi/themes/industrial.rasi", NULL };
+static const char *dmenucmd[] = { "j4-dmenu-desktop", "--dmenu=dmenu", "--term=st", NULL };
 static const char *filemgr[]  = { "thunar", NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *ll[]       = { "st", NULL };
@@ -115,7 +100,6 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MOD4KEY,                      XK_Return, spawn,          {.v = ll } },
 	{ MODKEY,                       XK_e,      spawn,          {.v = filemgr } },
-	{ MODKEY|ShiftMask,             XK_a,      spawn,          {.v = autostart } },
   { 0,                            XK_Print,  spawn,          {.v = screenshot_full } },
   { ShiftMask,                    XK_Print,  spawn,          {.v = screenshot_sel } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
