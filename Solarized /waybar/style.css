@@ -1,0 +1,46 @@
+* {
+  border: none;
+  border-radius: 0px;
+  font-family: VictorMono Nerd Font;
+  font-size: 16px;
+  min-height: 20px;
+  padding: 0;
+  margin: 0;
+}
+
+/* Fundo e texto principais - Industrial */
+window#waybar {
+  background: #0f0f0f;
+  color: #93a1a1;
+}
+
+#workspaces { 
+  padding: 0 5px;
+}
+
+#workspaces button {
+  padding: 3px 6px;
+  background: #0f0f0f;
+  color: #5c5048;
+}
+
+#workspaces button.focused {
+  background: #1a1a1a;
+  color: #a89080;
+}
+
+#cpu, #memory, #pulseaudio, #clock, #battery, #backlight, #group-info, #custom-arrow-left. #custom-arrow-right {
+color: #93a1a1;
+  padding: 0 8px;
+  font-size: 13px;
+  }
+
+/* Tooltip */
+tooltip {
+  background-color: #0f0f0f;
+  color: #5c5048;
+  border: 1px solid #2a2a2a;
+  padding: 6px;
+  font-family: VictorMono Nerd Font;
+  font-size: 11px;
+}
