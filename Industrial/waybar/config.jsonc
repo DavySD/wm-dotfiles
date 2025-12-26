@@ -1,15 +1,14 @@
 {
-  "layer": "bottom",
-  "position": "bottom",
+  "layer": "top",
+  "position": "top",
+  "height": 20,
   "gtk-layer-shell": true,
-  "modules-left": [],
+  "modules-left": ["wlr/workspaces"],
   "modules-right": ["cpu","memory","pulseaudio", "group/info", "clock"],
 
-  "ext/workspaces": {
+  "wlr/workspaces": {
     "format": "{icon}",
-    "ignore-hidden": true,
     "on-click": "activate",
-    "sort-by-id": true,
   },
 
   "group/info": {
