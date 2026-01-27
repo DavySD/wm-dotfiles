@@ -1,7 +1,12 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 1;        /* border pixel of windows */
+static const unsigned int borderpx  = 2;        /* border pixel of windows */
+static const unsigned int gappih    = 10;       /* horiz inner gap between windows */
+static const unsigned int gappiv    = 10;       /* vert inner gap between windows */
+static const unsigned int gappoh    = 10;       /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov    = 10;       /* vert outer gap between windows and screen edge */
+static int   smartgaps              = 1;        /* 1 means no outer gap when there is only one window */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft = 0;    /* 0: systray in the right corner, >0: systray on left of status text */
@@ -43,9 +48,9 @@ static const Rule rules[] = {
 	{ "Gimp",     NULL,       NULL,       0,            0,           -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
 	{ "Discord",  NULL,       NULL,       0,            1,           -1 },
-	{ "Steam",    NULL,       NULL,       0,            1,           -1 },
-	{ "steam",    NULL,       NULL,       0,            1,           -1 },
-	{ "Thunar",   NULL,       NULL,       0,            1,           -1 },
+	{ "Steam",  NULL,       NULL,       0,            1,           -1 },
+	{ "steam",  NULL,       NULL,       0,            1,           -1 },
+	{ "Thunar",     NULL,       NULL,       0,            1,           -1 },
 	{ NULL,		    "spterm",		NULL,		    SPTAG(0),		  1,			     -1 },
 	{ NULL,		    "spfm",	 	  NULL,		    SPTAG(1),		  1,			     -1 },
 	{ NULL,		    "bitwarden-desktop-bin",NULL,		    SPTAG(2),		  0,			     -1 },
@@ -59,16 +64,17 @@ static const int resizehints = 1;    /* 1 means respect size hints in tiled resi
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 static const int refreshrate = 120;  /* refresh rate (per second) for client move/resize */
 
-#include "fibonacci.c"
+#define FORCE_VSPLIT 1
+#include "vanitygaps.c"
+// #include "fibonacci.c"
 static const Layout layouts[] = {
 	/* symbol     arrange function */
+ 	{ "[\\]",     dwindle },
 	{ "[@]",      spiral },
 	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
- 	{ "[\\]",     dwindle },
 };
-;
 
 /* key definitions */
 #define MODKEY Mod1Mask
@@ -85,7 +91,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "j4-dmenu-desktop", "--dmenu=dmenu", "--term=st", NULL };
-static const char *filemgr[]  = { "thunar", NULL };
+static const char *filemgr[]  = { "dolphin", NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *ll[]       = { "st", NULL };
 static const char *upvol[]    = { "wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "5%+", NULL };
@@ -109,7 +115,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	// { MODKEY,                       XK_Return, zoom,           {0} },
+	{ MODKEY|ShiftMask,             XK_Escape, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
@@ -130,6 +136,25 @@ static const Key keys[] = {
 	{ 0, XF86XK_AudioRaiseVolume,   spawn,                     {.v = upvol } },
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 	{ MODKEY|ShiftMask,             XK_r,      quit,           {1} },
+	{ MODKEY|ShiftMask,             XK_h,      setcfact,       {.f = +0.25} },
+	{ MODKEY|ShiftMask,             XK_l,      setcfact,       {.f = -0.25} },
+	{ MODKEY|ShiftMask,             XK_o,      setcfact,       {.f =  0.00} },
+	{ MODKEY|Mod4Mask,              XK_u,      incrgaps,       {.i = +1 } },
+	{ MODKEY|Mod4Mask|ShiftMask,    XK_u,      incrgaps,       {.i = -1 } },
+	{ MODKEY|Mod4Mask,              XK_i,      incrigaps,      {.i = +1 } },
+	{ MODKEY|Mod4Mask|ShiftMask,    XK_i,      incrigaps,      {.i = -1 } },
+	{ MODKEY|Mod4Mask,              XK_o,      incrogaps,      {.i = +1 } },
+	{ MODKEY|Mod4Mask|ShiftMask,    XK_o,      incrogaps,      {.i = -1 } },
+	{ MODKEY|Mod4Mask,              XK_6,      incrihgaps,     {.i = +1 } },
+	{ MODKEY|Mod4Mask|ShiftMask,    XK_6,      incrihgaps,     {.i = -1 } },
+	{ MODKEY|Mod4Mask,              XK_7,      incrivgaps,     {.i = +1 } },
+	{ MODKEY|Mod4Mask|ShiftMask,    XK_7,      incrivgaps,     {.i = -1 } },
+	{ MODKEY|Mod4Mask,              XK_8,      incrohgaps,     {.i = +1 } },
+	{ MODKEY|Mod4Mask|ShiftMask,    XK_8,      incrohgaps,     {.i = -1 } },
+	{ MODKEY|Mod4Mask,              XK_9,      incrovgaps,     {.i = +1 } },
+	{ MODKEY|Mod4Mask|ShiftMask,    XK_9,      incrovgaps,     {.i = -1 } },
+	{ MODKEY|Mod4Mask,              XK_0,      togglegaps,     {0} },
+	{ MODKEY|Mod4Mask|ShiftMask,    XK_0,      defaultgaps,    {0} },
 	{ MODKEY,            			      XK_w,  	   togglescratch,  {.ui = 0 } },
 	{ MODKEY,            			      XK_u,	     togglescratch,  {.ui = 1 } },
 	{ MODKEY,            			      XK_x,	     togglescratch,  {.ui = 2 } },
