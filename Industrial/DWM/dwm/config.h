@@ -27,13 +27,13 @@ typedef struct {
 	const void *cmd;
 } Sp;
 const char *spcmd1[] = {"st", "-n", "spterm", "-g", "120x30", NULL };
-const char *spcmd2[] = {"st", "-n", "spfm", "-g", "120x30", "-e", "ranger", NULL };
-const char *spcmd3[] = {"bitwarden-desktop-bin", NULL };
+// const char *spcmd2[] = {"st", "-n", "spfm", "-g", "120x30", "-e", "ranger", NULL };
+// const char *spcmd3[] = {"bitwarden-desktop-bin", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spterm",      spcmd1},
-	{"spranger",    spcmd2},
-	{"bitwarden-desktop-bin",   spcmd3},
+	// {"spranger",    spcmd2},
+	// {"bitwarden-desktop-bin",   spcmd3},
 };
 
 /* tagging */
@@ -48,9 +48,9 @@ static const Rule rules[] = {
 	{ "Gimp",     NULL,       NULL,       0,            0,           -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
 	{ "Discord",  NULL,       NULL,       0,            1,           -1 },
-	{ "Steam",  NULL,       NULL,       0,            1,           -1 },
-	{ "steam",  NULL,       NULL,       0,            1,           -1 },
-	{ "Thunar",     NULL,       NULL,       0,            1,           -1 },
+	{ "Steam",    NULL,       NULL,       0,            1,           -1 },
+	{ "steam",    NULL,       NULL,       0,            1,           -1 },
+	{ "Thunar",   NULL,       NULL,       0,            1,           -1 },
 	{ NULL,		    "spterm",		NULL,		    SPTAG(0),		  1,			     -1 },
 	{ NULL,		    "spfm",	 	  NULL,		    SPTAG(1),		  1,			     -1 },
 	{ NULL,		    "bitwarden-desktop-bin",NULL,		    SPTAG(2),		  0,			     -1 },
@@ -91,7 +91,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "j4-dmenu-desktop", "--dmenu=dmenu", "--term=st", NULL };
-static const char *filemgr[]  = { "dolphin", NULL };
+static const char *filemgr[]  = { "dbus-launch", "Thunar", NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *ll[]       = { "st", NULL };
 static const char *upvol[]    = { "wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "5%+", NULL };
@@ -122,7 +122,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[3]} },
-	// { MODKEY|ShiftMask,             XK_r,      setlayout,      {.v = &layouts[4]} },
+	{ MOD4KEY|ShiftMask,             XK_r,      setlayout,      {.v = &layouts[4]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
@@ -186,4 +186,3 @@ static const Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
-
