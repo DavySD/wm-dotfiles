@@ -1,0 +1,5 @@
+theme = "solarized_light"
+
+[editor.lsp]
+enable=true
+display-messages = true

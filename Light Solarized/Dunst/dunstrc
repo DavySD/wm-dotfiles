@@ -1,0 +1,64 @@
+[global]
+    monitor = 0
+    follow = mouse
+    width = (0, 350)
+    height = 100
+    offset = 10x10
+    scale = 0
+    origin = top-right
+    transparency = 10
+    corner_radius = 0
+
+    separator_height = 1
+    separator_color = frame
+
+    padding = 15
+    horizontal_padding = 8
+
+    frame_width = 1
+    frame_color = "#eee8d5"
+
+    font = JetBrainsMono Nerd Font Thin 10
+    line_height = 2
+    markup = full
+
+    format = "<span size='small'><b>%s</b>\n%b</span>"
+    alignment = left
+    show_age_threshold = 60
+    word_wrap = yes
+    ignore_newline = no
+
+    stack_duplicates = true
+    hide_duplicate_count = false
+    show_indicators = yes
+
+    enable_recursive_icon_lookup = true
+    icon_position = left
+    min_icon_size = 24
+    max_icon_size = 64
+    icon_corner_radius = 0
+
+    sticky_history = yes
+    history_length = 20
+
+    dmenu = dmenu -p dunst:
+    browser = firefox -new-tab
+    startup_notification = false
+
+[urgency_low]
+    background = "#fdf6e3"
+    foreground = "#93a1a1"
+    frame_color = "#eee8d5"
+    timeout = 6
+
+[urgency_normal]
+    background = "#fdf6e3"
+    foreground = "#657b83"
+    frame_color = "#eee8d5"
+    timeout = 10
+
+[urgency_critical]
+    background = "#eee8d5"
+    foreground = "#dc322f"
+    frame_color = "#cb4b16"
+    timeout = 0
