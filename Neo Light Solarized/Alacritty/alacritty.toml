@@ -1,0 +1,59 @@
+# ~/.config/alacritty/alacritty.toml
+
+[general]
+# Inicia direto no Zellij
+import = []
+live_config_reload = true
+
+# [terminal]
+# shell = { program = "zellij" }
+
+[window]
+opacity = 1
+padding = { x = 10, y = 10 }
+dynamic_padding = true
+decorations = "full"
+
+[font]
+size = 11.0
+
+[font.normal]
+family = "VictorMono Nerd Font"
+style = "SemiBold"
+
+[font.bold]
+family = "VictorMono Nerd Font"
+style = "Bold"
+
+[font.italic]
+family = "VictorMono Nerd Font"
+style = "SemiBold Italic"
+
+# Esquema de Cores Solarized Light + Gruvbox Light backgrounds
+[colors.primary]
+background = "#fbf1c7"  # bege quente gruvbox
+foreground = "#657b83"  # cinza-azulado
+
+[colors.normal]
+black   = "#073642"  # base03
+red     = "#dc322f"  # vermelho
+green   = "#859900"  # verde
+yellow  = "#b58900"  # amarelo
+blue    = "#268bd2"  # azul
+magenta = "#d33682"  # magenta
+cyan    = "#2aa198"  # ciano
+white   = "#ebdbb2"  # bege claro gruvbox
+
+[colors.bright]
+black   = "#002b36"  # base02
+red     = "#cb4b16"  # laranja
+green   = "#586e75"  # base01
+yellow  = "#657b83"  # base00
+blue    = "#839496"  # base0
+magenta = "#6c71c4"  # violeta
+cyan    = "#93a1a1"  # base1
+white   = "#fbf1c7"  # bege quente gruvbox
+
+[colors.selection]
+text = "#657b83"
+background = "#ebdbb2"
