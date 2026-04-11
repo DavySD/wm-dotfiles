@@ -5,7 +5,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Liberation Mono:pixelsize=14:antialias=true:autohint=true";
+static char *font = "Hurmit Nerd Font:pixelsize=14:antialias=true:autohint=true";
 static int borderpx = 2;
 
 /*
@@ -16,7 +16,7 @@ static int borderpx = 2;
  * 4: value of shell in /etc/passwd
  * 5: value of shell in config.h
  */
-static char *shell = "/bin/zellij";
+static char *shell = "/bin/zsh";
 char *utmp = NULL;
 /* scroll program: to enable use a string like "scroll" */
 char *scroll = NULL;
@@ -106,44 +106,44 @@ char *termname = "st-256color";
 unsigned int tabspaces = 8;
 
 /* Terminal colors (16 first used in escape sequence) */
+/* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
 	/* 8 normal colors */
-	"#0f0f0f", /* 0: black   (carvão) */
-	"#7a3b2e", /* 1: red     (ferrugem apagada) */
-	"#5f6b4f", /* 2: green   (oliva sujo) */
-	"#8a7a5a", /* 3: yellow  (poeira velha) */
-	"#5a6472", /* 4: blue    (aço frio) */
-	"#6b5a6e", /* 5: magenta (roxo morto) */
-	"#5f7470", /* 6: cyan    (verde industrial) */
-	"#a89080", /* 7: white   (bege envelhecido) */
+	"#1a1612", /* 0: black   (cinza carbono) */
+	"#8b4839", /* 1: red     (ferrugem de ferro) */
+	"#6b7052", /* 2: green   (cobre oxidado - verdigris sujo) */
+	"#9d8555", /* 3: yellow  (latão manchado) */
+	"#5a6370", /* 4: blue    (aço weathered) */
+	"#7a5a68", /* 5: magenta (cobre rosé oxidado) */
+	"#5d7069", /* 6: cyan    (bronze esverdeado) */
+	"#a89885", /* 7: white   (concreto velho) */
 
 	/* 8 bright colors */
-	"#2a2a2a", /* 8:  black  (bright) */
-	"#b5541a", /* 9:  red    (ferrugem viva - accent) */
-	"#7a8a6a", /* 10: green  (bright) */
-	"#a08c6a", /* 11: yellow (bright) */
-	"#7a8596", /* 12: blue   (bright) */
-	"#8a748e", /* 13: magenta(bright) */
-	"#7a948f", /* 14: cyan   (bright) */
-	"#c0a890", /* 15: white  (bright) */
+	"#2e2820", /* 8:  black  (fuligem) */
+	"#c4633a", /* 9:  red    (FERRUGEM VIVA - accent!) */
+	"#8a9970", /* 10: green  (pátina de cobre) */
+	"#c8a866", /* 11: yellow (ouro sujo/bronze claro) */
+	"#748290", /* 12: blue   (aço azulado temperado) */
+	"#a37484", /* 13: magenta (cobre rosado) */
+	"#7d9488", /* 14: cyan   (bronze claro oxidado) */
+	"#d4c5a9", /* 15: white  (papel envelhecido) */
 
 	[255] = 0,
 
 	/* Cores especiais (Background e Foreground) */
-	"#0f0f0f", /* 256: background */
-	"#dcd7ba", /* 257: foreground */
-    "#c0a890", /* 258: cursor (opcional, usando o bright white) */
+	"#0f0f0f", /* 256: background (carvão profundo) */
+	"#d4c5a9", /* 257: foreground (papel envelhecido) */
+	"#c4633a", /* 258: cursor (ferrugem viva!) */
 };
 
 /*
  * Default colors (colorname index)
  * foreground, background, cursor, reverse cursor
  */
-unsigned int defaultbg = 256; /* Usa a cor #1a1a1a definida acima */
-unsigned int defaultfg = 257; /* Usa a cor #dcd7ba definida acima */
-unsigned int defaultcs = 257; /* Cursor usa a cor do foreground */
+unsigned int defaultbg = 256;
+unsigned int defaultfg = 257;
+unsigned int defaultcs = 258; /* Cursor agora usa a ferrugem viva */
 unsigned int defaultrcs = 256;
-
 /*
  * Default colors (colorname index)
  * foreground, background, cursor, reverse cursor
@@ -160,7 +160,7 @@ unsigned int defaultrcs = 256;
  * 6: Bar ("|")
  * 7: Snowman ("☃")
  */
-static unsigned int cursorshape = 2;
+static unsigned int cursorshape = 4;
 
 /*
  * Default columns and rows numbers
